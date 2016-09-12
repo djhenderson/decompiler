@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """ Abstracts the logic behind figuring out the arguments to a function call.
 
 http://en.wikipedia.org/wiki/X86_calling_conventions
 """
 
+from __future__ import print_function
 from expressions import *
 import ir.intel
 import ssa

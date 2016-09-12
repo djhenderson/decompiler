@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import idaapi
 
 import ir
@@ -12,10 +15,10 @@ def disassembler_for_arch(arch_name=None):
     arch_name = idaapi.get_file_type_name()
 
   if '386' in arch_name:
-    print 'Architecture: 32-bit intel.'
+    print('Architecture: 32-bit intel.')
     return (ir.IR_INTEL_x86, ir.intel.ir_intel_x86, intel.disassembler)
   elif 'x86-64' in arch_name:
-    print 'Architecture: 64-bit intel.'
+    print('Architecture: 64-bit intel.')
     return (ir.IR_INTEL_x64, ir.intel.ir_intel_x64, intel.disassembler)
 
   raise RuntimeError("Don't know which arch to choose for %s" % (repr(filetype), ))
@@ -40,4 +43,3 @@ def create(arch_name=None):
   dis = disassembler(ir_id)
 
   return dis
-

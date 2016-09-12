@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import iterators
 
 from statements import *
@@ -44,7 +47,7 @@ class arguments_renamer_t(renamer_t):
     return
 
   def is_restored(self, expr):
-    for exit, define in self.dec.restored_locations.iteritems():
+    for exit, define in self.dec.restored_locations.items():
       if define == expr and exit != define:
         return True
     return False

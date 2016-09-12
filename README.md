@@ -14,6 +14,8 @@ Install [Capstone](http://capstone-engine.org/)'s Python bindings like following
 Then try out the decompiler:
 
 ```python
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 from capstone import *
 from decompiler import *

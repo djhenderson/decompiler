@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import ply.lex as lex
 
 reserved = {
@@ -21,7 +24,7 @@ tokens = [
   'B_AEQ', # >=
   'SHL', # <<
   'SHR', # >>
-] + reserved.values()
+] + list(reserved.values())
 
 literals = "():<>~!&,+-*/=^|?;"
 
@@ -86,5 +89,6 @@ if __name__ == '__main__':
   # Tokenize
   while True:
     tok = lexer.token()
-    if not tok: break      # No more input
-    print tok
+    if not tok:
+      break      # No more input
+    print(tok)

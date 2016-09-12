@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """ Host module
 
 The disassembly work is offloaded to host programs. The host provides the following functionalities:

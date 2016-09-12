@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 """ Browser widget for graph_t object.
 
 """
 
+from __future__ import print_function
 import idc
 
 from output import c
@@ -10,7 +13,7 @@ try:
   import PySide
   from PySide import QtCore, QtGui
 except:
-  print 'PySide not available'
+  print('PySide not available')
   raise
 
 class token_fragment(object):

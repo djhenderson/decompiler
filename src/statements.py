@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 
+from __future__ import print_function
 from expressions import *
 
 class statement_t(object):
@@ -17,14 +19,14 @@ class statement_t(object):
     """ return the statement index inside its parent
         container, or None if container is None """
     if self.container is None:
-        return
+        return None
     return self.container.index(self)
 
   def remove(self):
     """ removes the statement from its container. return True if
         container is not None and the removal succeeded. """
     if self.container is None:
-        return
+        return None
     return self.container.remove(self)
 
   @property
@@ -117,7 +119,7 @@ class container_t(object):
     copy = container_t(self.block, [stmt.copy() for stmt in self])
     return copy
 
-  def iteritems(self):
+  def items(self):
     for i in range(len(self.__list)):
       yield i, self.__list[i]
     return

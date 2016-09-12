@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 
 class iterator_t(object):
   def __init__(self, function):

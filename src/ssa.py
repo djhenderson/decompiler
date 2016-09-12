@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 """ Transform a function into and out of SSA form.
 
 """
 
+from __future__ import print_function
 import propagator
 import iterators
 
@@ -119,7 +122,7 @@ class ssa_phase2_t(ssa_contextual_iterator_t):
     for _def in self.function.uninitialized:
       if use.no_index_eq(_def):
         return _def
-    return
+    return None
 
   def insert_exit_definition(self, context, _def):
     ctx = self.exit_contexts[context.block]
@@ -475,7 +478,7 @@ class ssa_tagger_t(object):
               restored_grouped[r] = [_def]
 
     restored = {}
-    for r, locs in restored_grouped.iteritems():
+    for r, locs in restored_grouped.items():
       if len(locs) == len(return_blocks):
         for loc in locs:
           restored[loc] = r
@@ -703,9 +706,9 @@ class ssa_back_transformer_t(object):
           self.replace_uses(_expr.definition, var)
       phi.unlink()
     else:
-      print 'more than one group'
-      print '   ', repr(groups)
-      raise 'not implemented'
+      print('more than one group')
+      print('   ', repr(groups))
+      raise NotImplementedError('not implemented')
 
     return
 

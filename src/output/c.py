@@ -1,5 +1,6 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
+from __future__ import print_function
 from expressions import *
 from statements import *
 from iterators import statement_iterator_t

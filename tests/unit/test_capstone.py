@@ -1,5 +1,6 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import unittest
 import sys
 
@@ -74,5 +75,3 @@ class TestCapstone(TestHelper):
 
 if __name__ == '__main__':
   unittest.main()
-
-

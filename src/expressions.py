@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
+import sys
+
+if sys.version_info[0] > 2:
+    long = int
 
 class uses_list(list):
 
@@ -112,7 +119,7 @@ class replaceable_t(object):
         return obj.__parent[0]
       obj = obj.__parent[0]
 
-    return
+    return None
 
   def is_parent(self, wanted):
     """ Check if 'obj' is a parent of 'self'. """

@@ -1,8 +1,17 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import ply.yacc as yacc
 import ir_lexer
 
-from expressions import *
-from statements import *
+try:
+  from expressions import *
+  from statements import *
+except ImportError:
+  print("Warning: Modified sys.path to import expressions and statements")
+  sys.path.insert(0, "../../../src")
+  from expressions import *
+  from statements import *
 
 tokens = ir_lexer.tokens
 
@@ -263,5 +272,4 @@ if __name__ == '__main__':
     c = *(a + 4);
   """
 
-  print parse(text)
-
+  print(parse(text))

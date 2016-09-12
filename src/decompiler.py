@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import graph
 import ssa
 import propagator
@@ -65,7 +67,7 @@ class function_t(object):
     self.graph = graph
     self.arch = graph.arch
     self.ea = graph.ea
-    self.blocks = {ea: function_block_t(self, node) for ea, node in graph.nodes.iteritems()}
+    self.blocks = {ea: function_block_t(self, node) for ea, node in graph.nodes.items()}
 
     self.uninitialized_stmt = statement_t(0, params_t())
     self.uninitialized = self.uninitialized_stmt.expr
@@ -83,7 +85,7 @@ class function_t(object):
 
   @property
   def return_blocks(self):
-    for ea, block in self.blocks.iteritems():
+    for ea, block in self.blocks.items():
       if block.node.is_return_node:
         yield block
     return
@@ -328,4 +330,3 @@ class decompiler_t(object):
     for klass in self.STEPS:
       yield self.run_step(klass)
     return
-

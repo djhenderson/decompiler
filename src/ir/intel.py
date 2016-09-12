@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
+
 """ intel x86 and x64 archs. """
 
+from __future__ import print_function
 from collections import namedtuple
 
 from expressions import *
 from statements import *
 
-from generic import ir_base
+from ir.generic import ir_base
 
 from . import *
 
@@ -111,11 +114,11 @@ class ir_intel(ir_base):
 
   def get_regindex(self, name):
     if name.lower() in registers:
-      return registers.keys().index(name.lower())
+      return list(registers.keys()).index(name.lower())
 
   def get_regname(self, which):
     if which < len(registers):
-      name = registers.keys()[which]
+      name = list(registers.keys())[which]
     else:
       name = '#%u' % (which, )
     return name

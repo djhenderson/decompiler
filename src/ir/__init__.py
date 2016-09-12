@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """ This module contains anything that has to do with translating a specific architecture
     into the intermediate representation, but independant of which specific host disassembler
     is used.

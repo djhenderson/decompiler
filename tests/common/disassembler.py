@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """ Disassembler for testing purposes.
 
 Fake disassembler which makes use of the text-to-IR parser as input
@@ -21,6 +23,7 @@ reading.
 
 """
 
+from __future__ import print_function
 from ply import ir_parser
 
 from ir.generic import ir_base
@@ -40,7 +43,7 @@ class parser_disassembler(ir_base):
     try:
       self.tree = ir_parser.parse(self.text)
     except:
-      print 'Could not parse IR from text.'
+      print('Could not parse IR from text.')
       raise
 
     return
@@ -120,10 +123,10 @@ class parser_disassembler(ir_base):
     #~ lineno = self.tree[ea][0]
     #~ if lineno is not None:
         #~ return 'loc_%x' % (lineno, )
-    for name, method in ir_parser.methods.iteritems():
+    for name, method in ir_parser.methods.items():
       if method == ea:
         return name
-    return
+    return None
 
   def get_string(self, ea):
     """ return the string starting at 'ea' or None if it is not a string. """

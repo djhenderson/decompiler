@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 """ Holds the basic block representation prior to and during disassembly. """
 
+from __future__ import print_function
 from expressions import *
 from statements import *
 
@@ -115,12 +118,12 @@ class graph_t(object):
         elif self.arch.has_jump(ea):
           for dest in self.arch.jump_branches(ea):
             if type(dest) != value_t:
-              print '%x: cannot follow jump to %s' % (ea, repr(dest))
+              print('%x: cannot follow jump to %s' % (ea, repr(dest)))
               continue
 
             ea_to = dest.value
             if ea_to not in self.func_items:
-              print '%x: jumped outside of function to %x' % (ea, ea_to, )
+              print('%x: jumped outside of function to %x' % (ea, ea_to, ))
             else:
               tonode = self.nodes[ea_to]
               node.add_jump_to(tonode)
@@ -130,7 +133,7 @@ class graph_t(object):
         next_ea = self.arch.next_instruction_ea(ea)
 
         if next_ea not in self.func_items:
-          print '%x: jumped outside of function: %x' % (ea, next_ea)
+          print('%x: jumped outside of function: %x' % (ea, next_ea))
           break
 
         ea = next_ea
@@ -223,4 +226,3 @@ class graph_t(object):
         node.statements.append(goto_t(item, value_t(node.falls_into.ea, self.arch.address_size)))
 
     return
-

@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 """ support for IDA's intel assembly. """
 
+from __future__ import print_function
 import idaapi
 import idautils
 import idc
@@ -157,7 +160,7 @@ class disassembler(object):
     if type(fct) == value_t and \
         idc.GetFunctionFlags(fct.value) & idaapi.FUNC_THUNK == idaapi.FUNC_THUNK:
 
-      print '%x: call to function thunk %x' % (ea, fct.value)
+      print('%x: call to function thunk %x' % (ea, fct.value))
 
       expr = call_t(fct, None)
       #~ return expr, []
@@ -176,7 +179,7 @@ class disassembler(object):
           #~ spoils = [p.copy() for p in call_flow.spoils]
         #~ except:
 
-        print '%x could not analyse call to %x' % (ea, fct.value)
+        print('%x could not analyse call to %x' % (ea, fct.value))
         params = []
         spoils = []
       else:
@@ -194,4 +197,3 @@ class disassembler(object):
       expr = assign_t(self.resultreg.copy(), expr)
 
     return expr, spoils
-

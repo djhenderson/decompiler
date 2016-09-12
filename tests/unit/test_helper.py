@@ -1,5 +1,6 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import re
 import unittest
 import sys
@@ -19,7 +20,7 @@ import host.dis
 try:
   import capstone
 except ImportError as e:
-  print 'warning: Capstone tests are unavailable'
+  print('warning: Capstone tests are unavailable')
   pass
 
 class callconv(object):
@@ -68,7 +69,7 @@ class TestHelper(unittest.TestCase):
 
     if isinstance(input, dict):
       tokenized = {}
-      for left, right in input.iteritems():
+      for left, right in input.items():
         tkey =self.deep_tokenize(function, left)
         tokenized[tkey] = self.deep_tokenize(function, right)
       return tokenized
@@ -135,7 +136,7 @@ class TestHelper(unittest.TestCase):
 
   def print_step(self, step, input):
     d = self.decompile_until(input, step)
-    print self.tokenize(d.function)
+    print(self.tokenize(d.function))
 
   def assert_uninitialized(self, input, expected):
     dec = self.decompile_until(input, decompiler.step_ssa_form_derefs)

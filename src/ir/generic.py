@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """ base class for the intermediate representation.
 
 The IR generation relies on a disassembler to parse the binary object.
@@ -5,6 +7,8 @@ Part of the methods below will be provided by the architecture-specific
 IR generator, and another part will be provided by the host-specific
 disassembler, which the arch-specific code relies upon.
 """
+
+from __future__ import print_function
 
 class ir_base(object):
 
@@ -43,36 +47,36 @@ class ir_base(object):
 
   def get_ea_name(self, ea):
     """ return the name of this location, or None if no name is defined. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_string(self, ea):
     """ return the string starting at 'ea' or None if it is not a string. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def function_does_return(self, ea):
     """ return False if the function does not return (ExitThread(), exit(), etc). """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_function_start(self, ea):
     """ return the address of the parent function, given any address inside that function. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_function_items(self, ea):
     """ return all addresses that belong to the function at 'ea'. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_mnemonic(self, ea):
     """ return textual mnemonic for the instruction at 'ea'. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_instruction_size(self, ea):
     """ return the instruction size. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_operand_expression(self, ea, n):
     """ return an expression representing the 'n'-th operand of the instruction at 'ea'. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')
 
   def get_call_expression(self, ea, insn):
     """ get an expression representing a function call at this address. """
-    raise NotImplementedException('must be implemented by host-specific disassembler')
+    raise NotImplementedError('must be implemented by host-specific disassembler')

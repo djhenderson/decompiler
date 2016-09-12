@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 """ support for Capstone's intel assembly. """
 
+from __future__ import print_function
 import capstone
 
 from expressions import *

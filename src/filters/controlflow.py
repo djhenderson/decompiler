@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
 """ Control flow reconstruction.
 
 Transforms the control flow into the most readable form possible.
 """
 
-import simplify_expressions
+from __future__ import print_function
+import filters.simplify_expressions
 import iterators
 
 from expressions import *
@@ -187,7 +190,7 @@ class conditional_t(object):
     stmt.true.value, stmt.false.value = stmt.false.value, stmt.true.value
 
     stmt.expr = b_not_t(stmt.expr.pluck())
-    simplify_expressions.run(stmt.expr, deep=True)
+    filters.simplify_expressions.run(stmt.expr, deep=True)
 
     return
 
@@ -222,7 +225,7 @@ class conditional_t(object):
 
     stmt = this.container[-1]
     stmt.expr = cls(stmt.expr.copy(), next.container[-1].expr.copy())
-    simplify_expressions.run(stmt.expr, deep=True)
+    filters.simplify_expressions.run(stmt.expr, deep=True)
 
     this.container[-1].false = next.container[-1].false
 
@@ -276,7 +279,7 @@ class controlflow_common_t(object):
       goto_true = goto_t(stmt.ea, stmt.true.copy())
       goto_false = goto_t(stmt.ea, stmt.false.copy())
       _if = if_t(stmt.ea, condition, container_t(stmt.container.block, [goto_true]))
-      simplify_expressions.run(_if.expr, deep=True)
+      filters.simplify_expressions.run(_if.expr, deep=True)
       stmt.container.insert(stmt.index(), _if)
       stmt.container.insert(stmt.index(), goto_false)
       stmt.remove()
@@ -297,7 +300,7 @@ class controlflow_common_t(object):
       else:
         return
       _if = if_t(stmt.ea, condition, container_t(block, [goto]))
-      simplify_expressions.run(_if.expr, deep=True)
+      filters.simplify_expressions.run(_if.expr, deep=True)
       ctn.add(_if)
       stmt.remove()
 
@@ -369,7 +372,7 @@ class loop_reconstructor_t(controlflow_common_t):
         reconstructed first. This prioritizer returns the first
         block that never reaches the loop's conditional block,
         or if both reaches it, the longest path first. """
-    #print 'prioritize non conditional block', repr(left.container), 'or', repr(right.container)
+    #print('prioritize non conditional block', repr(left.container), 'or', repr(right.container))
     if self.loop.condition_block:
       left_reach = self.reaches_to(left, self.loop.condition_block, [])
       right_reach = self.reaches_to(right, self.loop.condition_block, [])
@@ -385,11 +388,11 @@ class loop_reconstructor_t(controlflow_common_t):
     """ Choose which block between left and right should be
         reconstructed first. This prioritizer returns whichever
         block creates the longest path inside of the loop's blocks. """
-    #print 'prioritize longest', repr(left.container), 'or', repr(right.container)
+    #print('prioritize longest', repr(left.container), 'or', repr(right.container))
     left_reach = self.reaches_to(left, self.loop.start, [])
     right_reach = self.reaches_to(right, self.loop.start, [])
-    #print 'left_reach', repr(left_reach)
-    #print 'right_reach', repr(right_reach)
+    #print('left_reach', repr(left_reach))
+    #print('right_reach', repr(right_reach))
     if not left_reach and not right_reach:
       return
     elif not left_reach:
@@ -439,12 +442,12 @@ class loop_reconstructor_t(controlflow_common_t):
       ctn = container_t(block, [break_t(stmt.ea)])
       _if = if_t(stmt.ea, b_not_t(stmt.expr.copy()), ctn)
       block.container.add(_if)
-      simplify_expressions.run(_if.expr, deep=True)
+      filters.simplify_expressions.run(_if.expr, deep=True)
 
     # collapse all the loop blocks into a single container
-    #print repr(self.loop.blocks)
+    #print(repr(self.loop.blocks))
     self.cf.reconstruct_forward(self.loop.blocks, self.prioritize_longest_path)
-    #print repr(self.loop.blocks)
+    #print(repr(self.loop.blocks))
 
     # build the new while loop.
     block = self.loop.blocks[0]
@@ -523,7 +526,7 @@ class conditional_reconstructor_t(controlflow_common_t):
       then_ctn, else_ctn = else_ctn, then_ctn
       expr = b_not_t(expr)
     _if = if_t(stmt.ea, expr, then_ctn, else_ctn)
-    simplify_expressions.run(_if.expr, deep=True)
+    filters.simplify_expressions.run(_if.expr, deep=True)
     self.conditional.top.container.add(_if)
     self.conditional.top.container.add(goto_t(stmt.ea, value_t(self.conditional.bottom.ea, self.function.arch.address_size)))
 
@@ -582,7 +585,7 @@ class assembler_t(controlflow_common_t):
 
       true_ctn = container_t(container.block, [])
       _if = if_t(stmt.ea, expr, true_ctn, None)
-      simplify_expressions.run(_if.expr, deep=True)
+      filters.simplify_expressions.run(_if.expr, deep=True)
       container.add(_if)
       stmt.remove()
 
@@ -656,7 +659,7 @@ class controlflow_t(controlflow_common_t):
 def run(function):
   """ combine until no more combinations can be applied. """
   c = controlflow_t(function)
-  #print 'loops', repr(c.loops)
-  #print 'conditionals', repr(c.conditionals)
+  #print('loops', repr(c.loops))
+  #print('conditionals', repr(c.conditionals))
   c.reconstruct()
   return

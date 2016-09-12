@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import idautils
 import idaapi
 import idc
@@ -17,7 +20,7 @@ try:
   import PySide
   from PySide import QtCore, QtGui
 except:
-  print 'PySide not available'
+  print('PySide not available')
   raise
 
 sys.modules['__main__'].QtGui = QtGui # goddamit IDA..
@@ -86,7 +89,7 @@ class DecompilerForm(idaapi.PluginForm):
     d = decompiler.decompiler_t(dis, self.ea)
 
     for step in d.steps():
-      print 'Decompiler step: %u - %s' % (step, decompilation_phase[step])
+      print('Decompiler step: %u - %s' % (step, decompilation_phase[step]))
       if step >= wanted_step:
         break
 

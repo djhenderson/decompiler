@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 from expressions import *
 from iterators import *
 import filters.simplify_expressions

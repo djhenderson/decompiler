@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import idautils
 import idaapi
 import idc
@@ -74,12 +77,12 @@ class GraphViewer(idaapi.GraphViewer):
     t = tagger(f, conv)
     t.tag_all()
 
-    #~ print '1'
+    #~ print('1')
     # remove special flags (eflags) definitions that are not used, just for clarity
     s = simplifier(f, COLLECT_FLAGS)
     s.remove_unused_definitions()
 
-    #~ print '2'
+    #~ print('2')
     # After registers are tagged, we can replace their uses by their definitions. this
     # takes care of eliminating any instances of 'esp' which clears the way for
     # determining stack variables correctly.
@@ -88,7 +91,7 @@ class GraphViewer(idaapi.GraphViewer):
     s = simplifier(f, COLLECT_REGISTERS)
     s.remove_unused_definitions()
 
-    #~ print '3'
+    #~ print('3')
     # rename stack variables to differenciate them from other dereferences.
     r = renamer(f, RENAME_STACK_LOCATIONS)
     r.wrap_variables()
@@ -97,12 +100,12 @@ class GraphViewer(idaapi.GraphViewer):
     s = simplifier(f, COLLECT_ALL)
     s.collect_argument_calls(conv)
 
-    #~ print '3.1'
+    #~ print('3.1')
     # This propagates special flags.
     s = simplifier(f, COLLECT_ALL)
     s.propagate_all(PROPAGATE_REGISTERS | PROPAGATE_FLAGS)
 
-    #~ print '4'
+    #~ print('4')
     # At this point we must take care of removing increments and decrements
     # that are in their own statements and "glue" them to an adjacent use of
     # that location.
@@ -113,11 +116,11 @@ class GraphViewer(idaapi.GraphViewer):
     s = simplifier(f, COLLECT_ALL)
     s.propagate_all(PROPAGATE_REGISTERS | PROPAGATE_FLAGS)
 
-    #~ print '5'
+    #~ print('5')
     s = simplifier(f, COLLECT_ALL)
     s.propagate_all(PROPAGATE_ANY | PROPAGATE_SINGLE_USES)
 
-    #~ print '6'
+    #~ print('6')
     # eliminate restored registers. during this pass, the simplifier also collects
     # stack variables because registers may be preserved on the stack.
     s = simplifier(f, COLLECT_REGISTERS | COLLECT_VARIABLES)
@@ -127,7 +130,7 @@ class GraphViewer(idaapi.GraphViewer):
     s = simplifier(f, COLLECT_REGISTERS)
     s.remove_unused_definitions()
 
-    #~ print '7'
+    #~ print('7')
     # rename registers to pretty names.
     r = renamer(f, RENAME_REGISTERS)
     r.fct_arguments = t.fct_arguments
@@ -135,6 +138,6 @@ class GraphViewer(idaapi.GraphViewer):
 
     return f
 
-print 'decompile:', idc.here()
+print('decompile:', idc.here())
 func = idaapi.get_func(idc.here())
 g = GraphViewer(func)

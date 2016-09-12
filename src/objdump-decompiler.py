@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import sys
 import re
 import binascii
@@ -62,13 +65,13 @@ class Cmdline(object):
     return data
 
   def print_function(self, function):
-    print '----------'
-    print '%x %s (%s)' % (function.address, function.name, self.step_until.__doc__)
+    print('----------')
+    print('%x %s (%s)' % (function.address, function.name, self.step_until.__doc__))
     try:
       dec = self.decompile_until(function.hex)
       print(''.join([str(o) for o in output.c.tokenizer(dec.function).tokens]))
     except BaseException as e:
-      print 'Failed to decompile: %s' % repr(e)
+      print('Failed to decompile: %s' % repr(e))
       traceback.print_exc()
     return
 
@@ -78,7 +81,7 @@ class Cmdline(object):
     return
 
   def decompile_all(self):
-    for name, function in self.functions.iteritems():
+    for name, function in self.functions.items():
       self.print_function(function)
     return
 
@@ -119,9 +122,9 @@ if __name__ == '__main__':
   elif args.step in steps:
     p.step_until = steps[args.step]
   else:
-    print 'argument --step not valid, choose one of:'
+    print('argument --step not valid, choose one of:')
     for name in steps:
-      print '  %-30s %s' % (name, steps[name].__doc__)
+      print('  %-30s %s' % (name, steps[name].__doc__))
     sys.exit(1)
 
   if not args.function:
@@ -129,8 +132,8 @@ if __name__ == '__main__':
   elif args.function in p.functions:
     p.decompile_function(args.function)
   else:
-    print 'argument --fct not valid, use one of:'
-    print '   %s' % (', '.join([f.name for f in p.functions.values()]))
+    print('argument --fct not valid, use one of:')
+    print('   %s' % (', '.join([f.name for f in p.functions.values()])))
     sys.exit(1)
 
   sys.exit(0)

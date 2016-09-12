@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """ This module runs an expression through a series of filters.
 
 When a filter matches, a new expression is created from the old one
@@ -5,6 +7,7 @@ and returned to the caller, which should call again until all filters
 are exhausted and no simpler expression can be generated.
 """
 
+from __future__ import print_function
 from expressions import *
 
 __all__ = []

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import idaapi
 
 def show_decompiler():
@@ -17,7 +20,7 @@ def show_decompiler():
     func = idaapi.get_func(ea)
 
     ea = func.startEA
-    print 'Decompiling %x' % (ea, )
+    print('Decompiling %x' % (ea, ))
 
     form = decompiler_form.DecompilerForm(ea)
     form.Show()
