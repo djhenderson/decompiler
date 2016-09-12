@@ -24,23 +24,31 @@ except ImportError as e:
   pass
 
 class callconv(object):
+
   def __init__(self, callconv):
     self.callconv = callconv
     return
+
   def __call__(self, test_func):
+
     def callconv_wrapper(_self, *args):
       _self.calling_convention = self.callconv
       test_func(_self, *args)
+
     return callconv_wrapper
 
 class disasm(object):
+
   def __init__(self, disasm):
     self.disasm = disasm
     return
+
   def __call__(self, test_func):
+
     def disasm_wrapper(_self, *args):
       _self.disasm = self.disasm
       test_func(_self, *args)
+
     return disasm_wrapper
 
 class TestHelper(unittest.TestCase):
@@ -115,14 +123,26 @@ class TestHelper(unittest.TestCase):
     return self.unindent(''.join([str(t) for t in tokens]))
 
   def objdump_to_hex(self, input):
-    hex = re.findall(r'^\s*[a-f0-9]*:((?:\s(?:[a-f0-9]{2}))*)', input, flags=re.MULTILINE)
+    hex = re.findall(r'''\
+^ \s* [A-Fa-f0-9]*
+:
+( (?: \s (?: [A-Fa-f0-9]{2} ) )* )
+''', input, flags=re.MULTILINE+re.VERBOSE)
     hex = ''.join(hex).replace(' ', '')
     return binascii.unhexlify(hex)
 
   def objdump_load(self, filename):
     filepath = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), filename))
+    # print('test_helper:TestHelper.objdump_load("%s")\n=> "%s"' % (filename,filepath,)) # debug
     data = file(filepath, 'rb').read()
-    parsed = re.findall(r'([a-f0-9]+) \<([^\>]+)\>\:\n((?:\s+[a-f0-9]+:(?:\s(?:[a-f0-9]{2}))*\s+[^\n]*)*\n)', data, flags=re.MULTILINE)
+    parsed = re.findall(r'''
+( [A-Fa-f0-9]+ )
+\s \<
+( [^\>]+ )
+\> \: \s* \n
+( (?: \s+ [A-Fa-f0-9]+ : (?: \s (?: [A-Fa-f0-9]{2} ) )* \s+ [^\n]* )* \n )
+''', data, flags=re.MULTILINE+re.VERBOSE)
+    # print("parsed:", parsed)  # debug
     Function = namedtuple('Point', ['address', 'name', 'text', 'hex'])
     functions = {o[1]: Function(address=int(o[0], 16),name=o[1],text=o[2],hex=self.objdump_to_hex(o[2])) for o in parsed}
     return functions
