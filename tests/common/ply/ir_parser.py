@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+import sys
 import ply.yacc as yacc
 import ir_lexer
 
