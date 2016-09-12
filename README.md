@@ -1,5 +1,7 @@
-decompiler ![Build Status](https://api.travis-ci.org/EiNSTeiN-/decompiler.svg)
+decompiler
 ==============
+
+[![Build Status](https://travis-ci.org/djhenderson/decompiler.svg?branch=master)](https://travis-ci.org/djhenderson/decompiler)
 
 A multi-backends decompiler written in python. It currently supports IDA and Capstone.
 
@@ -12,6 +14,7 @@ Install [Capstone](http://capstone-engine.org/)'s Python bindings like following
 Then try out the decompiler:
 
 ```python
+from __future__ import print_function
 from capstone import *
 from decompiler import *
 from host import dis
@@ -20,8 +23,11 @@ from output import c
 # Create a Capstone object, which will be used as disassembler
 md = Cs(CS_ARCH_X86, CS_MODE_32)
 
-# Define a bunch of bytes to disassemble
-code = "\x55\x89\xe5\x83\xec\x28\xc7\x45\xf4\x00\x00\x00\x00\x8b\x45\xf4\x8b\x00\x83\xf8\x0e\x75\x0c\xc7\x04\x24\x30\x87\x04\x08\xe8\xd3\xfe\xff\xff\xb8\x00\x00\x00\x00\xc9\xc3"
+# Define a bunch of bytes to disassemble (Capstone requires bytes)
+code = \
+    b"\x55\x89\xe5\x83\xec\x28\xc7\x45\xf4\x00\x00\x00\x00\x8b\x45\xf4" + \
+    b"\x8b\x00\x83\xf8\x0e\x75\x0c\xc7\x04\x24\x30\x87\x04\x08\xe8\xd3" + \
+    b"\xfe\xff\xff\xb8\x00\x00\x00\x00\xc9\xc3"
 
 # Create the capstone-specific backend; it will yield expressions that the decompiler is able to use.
 disasm = dis.available_disassemblers['capstone'].create(md, code, 0x1000)
@@ -89,4 +95,3 @@ This project could use some improvements in the following areas:
 * add support for more calling conventions. currently, only SystemV x64 ABI (x64 linux gcc) is supported. under other compilers, function calls will be displayed without parameters.
 * add a GUI for renaming variables, inverting if-else branches, and other easy things.
 * when possible, functions called from the one being decompiled should be analysed to determine function arguments and restored registers.
-
