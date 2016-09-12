@@ -77,14 +77,20 @@ lexer = lex.lex()
 
 if __name__ == '__main__':
 
-  lexer.input("""
-  loc_1:
-    a = 400 // foo
-    b = a - 900 + -100
-    // bar
-    c = *(a + 4)
-    d = "blarg"
-  """)
+  text = """
+loc_1:
+  a = 400 // foo
+  b = a - 900 + -100
+  // bar
+  c = *(a + 4)
+  d = "blarg"
+"""
+
+  print("text:\n     123456789012345678901234")
+  for line_no, text_line in enumerate(text.split('\n')):
+    print("%3d: %s" % (line_no+1, text_line,))
+
+  lexer.input(text)
 
   # Tokenize
   while True:

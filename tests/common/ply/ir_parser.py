@@ -265,11 +265,15 @@ if __name__ == '__main__':
   #~ sys.path.append('../../src/')
 
   text = """
-  100:
-    a = 400; // foo
-    b = a - 900 + -100;
-    // bar
-    c = *(a + 4);
-  """
+100:
+  a = 400; // foo
+  b = a - 900 + -100;
+  // bar
+  c = *(a + 4);
+"""
 
+  print("text:", text)
+  print()
   print(parse(text))
+  print()
+  print('\n'.join([str(t) for t in parse(text)]))
