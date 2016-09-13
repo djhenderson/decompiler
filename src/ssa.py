@@ -127,7 +127,9 @@ class ssa_phase2_t(ssa_contextual_iterator_t):
   def insert_exit_definition(self, context, _def):
     ctx = self.exit_contexts[context.block]
     other_def = ctx.get_local_definition(_def)
-    if not other_def or other_def.parent_statement.index() < _def.parent_statement.index():
+    if not other_def or (\
+        type(other_def.parent_statement.index()) is type(_def.parent_statement.index()) and\
+        other_def.parent_statement.index() < _def.parent_statement.index()):
       ctx.assign(_def)
 
     other_def = context.get_local_definition(_def)

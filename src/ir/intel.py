@@ -45,39 +45,55 @@ QWORD = 4
 register_t = namedtuple('register_t', ['name', 'size', 'type'])
 registers = {}
 
-for name in ('rax', 'rbx', 'rcx', 'rdx', 'rsi', 'rdi', 'rbp', 'rip', 'rsp', 'r8', 'r9', 'r10', 'r11', 'r12', 'r13', 'r14', 'r15'):
+for name in (b'rax', b'rbx', b'rcx', b'rdx', b'rsi', b'rdi', b'rbp', \
+    b'rip', b'rsp', b'r8', b'r9', b'r10', b'r11', b'r12', b'r13', \
+    b'r14', b'r15'):
   registers[name] = register_t(name, SIZE_64, QWORD)
 
-for name in ('eax', 'ebx', 'ecx', 'edx', 'esi', 'edi', 'ebp', 'eip', 'esp', 'r8d', 'r9d', 'r10d', 'r11d', 'r12d', 'r13d', 'r14d', 'r15d'):
+for name in (b'eax', b'ebx', b'ecx', b'edx', b'esi', b'edi', b'ebp', \
+    b'eip', b'esp', b'r8d', b'r9d', b'r10d', b'r11d', b'r12d', \
+    b'r13d', b'r14d', b'r15d'):
   registers[name] = register_t(name, SIZE_32, DWORD)
 
-for name in ('ax', 'bx', 'cx', 'dx', 'si', 'di', 'bp', 'ip', 'sp', 'r8w', 'r9w', 'r10w', 'r11w', 'r12w', 'r13w', 'r14w', 'r15w'):
+for name in (b'ax', b'bx', b'cx', b'dx', b'si', b'di', b'bp', b'ip', \
+    b'sp', b'r8w', b'r9w', b'r10w', b'r11w', b'r12w', b'r13w', \
+    b'r14w', b'r15w'):
   registers[name] = register_t(name, SIZE_16, WORD)
 
-for name in ('ah', 'bh', 'ch', 'dh'):
+for name in (b'ah', b'bh', b'ch', b'dh'):
   registers[name] = register_t(name, SIZE_8, HIBYTE)
 
-for name in ('al', 'bl', 'cl', 'dl', 'sil', 'dil', 'bpl', 'spl', 'r8b', 'r9b', 'r10b', 'r11b', 'r12b', 'r13b', 'r14b', 'r15b'):
+for name in (b'al', b'bl', b'cl', b'dl', b'sil', b'dil', b'bpl', \
+    b'spl', b'r8b', b'r9b', b'r10b', b'r11b', b'r12b', b'r13b', \
+    b'r14b', b'r15b'):
   registers[name] = register_t(name, SIZE_8, LOBYTE)
 
 register_groups = []
-register_groups.append(('rax', 'eax', 'ax', 'ah', 'al'))
-register_groups.append(('rbx', 'ebx', 'bx', 'bh', 'bl'))
-register_groups.append(('rcx', 'ecx', 'cx', 'ch', 'cl'))
-register_groups.append(('rdx', 'edx', 'dx', 'dh', 'dl'))
-register_groups.append(('rsi', 'esi', 'si', 'sil'))
-register_groups.append(('rdi', 'edi', 'di', 'dil'))
-register_groups.append(('rbp', 'ebp', 'bp', 'bpl'))
-register_groups.append(('rip', 'eip', 'ip'))
-register_groups.append(('rsp', 'esp', 'sp', 'spl'))
-register_groups.append(('r8', 'r8d', 'r8w', 'r8b'))
-register_groups.append(('r9', 'r9d', 'r9w', 'r9b'))
-register_groups.append(('r10', 'r10d', 'r10w', 'r10b'))
-register_groups.append(('r11', 'r11d', 'r11w', 'r11b'))
-register_groups.append(('r12', 'r12d', 'r12w', 'r12b'))
-register_groups.append(('r13', 'r13d', 'r13w', 'r13b'))
-register_groups.append(('r14', 'r14d', 'r14w', 'r14b'))
-register_groups.append(('r15', 'r15d', 'r15w', 'r15b'))
+register_groups.append((b'rax', b'eax', b'ax', b'ah', b'al'))
+register_groups.append((b'rbx', b'ebx', b'bx', b'bh', b'bl'))
+register_groups.append((b'rcx', b'ecx', b'cx', b'ch', b'cl'))
+register_groups.append((b'rdx', b'edx', b'dx', b'dh', b'dl'))
+register_groups.append((b'rsi', b'esi', b'si', b'sil'))
+register_groups.append((b'rdi', b'edi', b'di', b'dil'))
+register_groups.append((b'rbp', b'ebp', b'bp', b'bpl'))
+register_groups.append((b'rip', b'eip', b'ip'))
+register_groups.append((b'rsp', b'esp', b'sp', b'spl'))
+register_groups.append((b'r8', b'r8d', b'r8w', b'r8b'))
+register_groups.append((b'r9', b'r9d', b'r9w', b'r9b'))
+register_groups.append((b'r10', b'r10d', b'r10w', b'r10b'))
+register_groups.append((b'r11', b'r11d', b'r11w', b'r11b'))
+register_groups.append((b'r12', b'r12d', b'r12w', b'r12b'))
+register_groups.append((b'r13', b'r13d', b'r13w', b'r13b'))
+register_groups.append((b'r14', b'r14d', b'r14w', b'r14b'))
+register_groups.append((b'r15', b'r15d', b'r15w', b'r15b'))
+
+## DEBUG
+#import pprint
+#pp = pprint.PrettyPrinter(indent=3)
+#print("registers:")
+#pprint.pprint(registers)
+## DEBUG
+
 
 class ir_intel(ir_base):
 
@@ -125,21 +141,27 @@ class ir_intel(ir_base):
 
   def get_stack_register(self):
     if self.ir_id == IR_INTEL_x86:
-      return self.get_regindex('esp')
+      return self.get_regindex(b'esp')
     elif self.ir_id == IR_INTEL_x64:
-      return self.get_regindex('rsp')
+      return self.get_regindex(b'rsp')
+    elif self.ir_id == IR_INTEL_x16:
+      return self.get_regindex(b'sp')
 
   def get_result_register(self):
     if self.ir_id == IR_INTEL_x86:
-      return self.get_regindex('eax')
+      return self.get_regindex(b'eax')
     elif self.ir_id == IR_INTEL_x64:
-      return self.get_regindex('rax')
+      return self.get_regindex(b'rax')
+    elif self.ir_id == IR_INTEL_x16:
+      return self.get_regindex(b'ax')
 
   def get_leave_register(self):
     if self.ir_id == IR_INTEL_x86:
-      return self.get_regindex('ebp')
+      return self.get_regindex(b'ebp')
     elif self.ir_id == IR_INTEL_x64:
-      return self.get_regindex('rbp')
+      return self.get_regindex(b'rbp')
+    elif self.ir_id == IR_INTEL_x16:
+      return self.get_regindex(b'bp')
 
   def make_special_register(self, name):
     reg = flagloc_t(self.special_registers, 1, name)
@@ -163,7 +185,10 @@ class ir_intel(ir_base):
 
   def is_conditional_jump(self, ea):
     """ return true if this instruction is a conditional jump. """
+    #print("DEBUG: self.get_mnemonic", repr(self.get_mnemonic))
     mnem = self.get_mnemonic(ea)
+    #print("DEBUG: type(mnem):", type(mnem), mnem)
+    #print("DEBUG: type(self.conditional_jumps[0]): %s %s" % (type(self.conditional_jumps[0]), self.conditional_jumps[0]))
     if mnem in self.conditional_jumps:
       return True
     return False
@@ -468,7 +493,7 @@ class ir_intel(ir_base):
         cond = b_and_t(b_not_t(self.zf.copy()), b_not_t(self.cf.copy()))
       elif mnem in ('cmovae', 'cmovnb', 'cmovnc'):
         cond = b_not_t(self.cf.copy())
-      elif mnem in ('cmovb', 'cmovc', 'cmovnae'):
+      elif mnem in ('cmov', 'cmovc', 'cmovnae'):
         cond = self.cf.copy()
       elif mnem == 'cmovbe':
         cond = b_or_t(self.zf.copy(), self.cf.copy())
@@ -521,7 +546,7 @@ class ir_intel(ir_base):
         cond = b_and_t(b_not_t(self.zf.copy()), b_not_t(self.cf.copy()))
       elif mnem in ('setae', 'setnb', 'setnc'):
         cond = b_not_t(self.cf.copy())
-      elif mnem in ('setb', 'setc', 'setnae'):
+      elif mnem in ('set', 'setc', 'setnae'):
         cond = self.cf.copy()
       elif mnem == 'setbe':
         cond = b_or_t(self.zf.copy(), self.cf.copy())
@@ -625,7 +650,9 @@ class ir_intel(ir_base):
 
     return
 
+
 class ir_intel_x86(ir_intel):
+
   def __init__(self):
     self.address_size = 32
     ir_intel.__init__(self)
@@ -634,7 +661,9 @@ class ir_intel_x86(ir_intel):
   def get_register_size(self, which):
     return 32
 
+
 class ir_intel_x64(ir_intel):
+
   def __init__(self):
     self.address_size = 64
     ir_intel.__init__(self)
@@ -642,3 +671,14 @@ class ir_intel_x64(ir_intel):
 
   def get_register_size(self, which):
     return 64
+
+
+class ir_intel_x16(ir_intel):
+
+  def __init__(self):
+    self.address_size = 20
+    ir_intel.__init__(self)
+    return
+
+  def get_register_size(self, which):
+    return 16

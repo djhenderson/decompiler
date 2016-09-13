@@ -9,11 +9,13 @@ try:
   import idaapi # try importing ida's main module.
   import ida.dis
 
-  print('Using IDA backend.')
+  print('INFO: Using IDA backend.')
   available_disassemblers['ida'] = ida.dis
 except ImportError as e:
+  print('WARNING: IDA backend is not available.')
   pass
 except BaseException as e:
+  print('WARNING: IDA backend is not available.')
   print(repr(e))
   traceback.print_exc()
 
@@ -21,15 +23,17 @@ try:
   import capstone # try importing capstone.
   from .capstone import dis
 
-  print('Using Capstone backend.')
+  print('INFO: Using Capstone backend.')
   available_disassemblers['capstone'] = dis
 except ImportError as e:
+  print('WARNING: Capstone backend is not available.')
   print(repr(e))
   traceback.print_exc()
   pass
 except BaseException as e:
+  print('WARNING: Capstone backend is not available.')
   print(repr(e))
   traceback.print_exc()
 
 if len(available_disassemblers) == 0:
-  print('No available backend.')
+  print('ERROR: No available backend.')

@@ -377,7 +377,7 @@ class expr_t(replaceable_t):
     replaceable_t.__init__(self)
 
     self.__size = kwargs.pop('size', None)
-    assert len(kwargs) == 0, "unrecognized constructor option: %s" % (repr(kwargs.keys()), )
+    assert len(kwargs) == 0, "unrecognized constructor option: %s" % (repr(list(kwargs.keys())), )
 
     self.__operands = [None for i in operands]
     for i in range(len(operands)):

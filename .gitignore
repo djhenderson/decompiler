@@ -5,5 +5,4 @@ parsetab.py
 *.i64
 *.idb
 .DS_Store
-djh_try.py
 *.bak

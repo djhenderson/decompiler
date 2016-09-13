@@ -109,6 +109,9 @@ class TestHelper(unittest.TestCase):
     elif self.disasm == 'capstone-x86-64':
       md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
       dis = host.dis.available_disassemblers['capstone'].create(md, input)
+    elif self.disasm == 'capstone-x16':
+      md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
+      dis = host.dis.available_disassemblers['capstone'].create(md, input)
 
     dec = decompiler.decompiler_t(dis, 0)
     if self.calling_convention:

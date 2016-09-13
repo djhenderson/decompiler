@@ -9,7 +9,7 @@ try:
   from expressions import *
   from statements import *
 except ImportError:
-  print("Warning: Modified sys.path to import expressions and statements")
+  print("WARNING: Modified sys.path to import expressions and statements")
   sys.path.insert(0, "../../../src")
   from expressions import *
   from statements import *
@@ -198,11 +198,14 @@ def p_goto_number(p):
   'goto : GOTO NUMBER'
   p[0] = goto_t(None, value_t(p[2], 32))
 
+
 class conditional_goto_t(object):
+
   def __init__(self, cond, loc):
     self.cond = cond
     self.loc = loc
     return
+
   def __repr__(self):
     return '<goto %u if %s>' % (self.loc, repr(self.cond))
 

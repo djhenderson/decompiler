@@ -138,8 +138,10 @@ def equality_with_literals(expr):
   (<1> - n1) == n2 becomes <1> == n3 where n3 = n1 + n2
   """
 
-  if type(expr) in (eq_t, neq_t, above_t, lower_t, aeq_t, leq_t) and type(expr.op2) == value_t and \
-    type(expr.op1) in (sub_t, add_t) and type(expr.op1.op2) == value_t:
+  if type(expr) in (eq_t, neq_t, above_t, lower_t, aeq_t, leq_t) and \
+    type(expr.op2) == value_t and \
+    type(expr.op1) in (sub_t, add_t) and \
+    type(expr.op1.op2) == value_t:
 
     if type(expr.op1) == sub_t:
       _value = value_t(expr.op2.value + expr.op1.op2.value, max(expr.op2.size, expr.op1.op2.size))

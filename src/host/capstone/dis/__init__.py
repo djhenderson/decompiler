@@ -17,6 +17,9 @@ def disassembler_for_arch(md):
   elif md.arch == capstone.CS_ARCH_X86 and md.mode & capstone.CS_MODE_64:
     print('Architecture: 64-bit intel.')
     return (ir.IR_INTEL_x64, ir.intel.ir_intel_x64, intel.disassembler)
+  elif md.arch == capstone.CS_ARCH_X86 and md.mode & capstone.CS_MODE_16:
+    print('Architecture: 16-bit intel.')
+    return (ir.IR_INTEL_x16, ir.intel.ir_intel_x16, intel.disassembler)
 
   raise RuntimeError("Don't know which arch to choose for %s" % (repr(filetype), ))
 

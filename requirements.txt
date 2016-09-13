@@ -1,2 +1,2 @@
-capstone
-ply
+capstone>=4.0
+ply>=3.8

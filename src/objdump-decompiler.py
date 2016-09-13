@@ -17,6 +17,7 @@ import ssa
 import output.c
 
 class Cmdline(object):
+
   def __init__(self):
     self.functions = self.objdump_load(self.read_stdin())
     self.arch = 'x86'
@@ -25,12 +26,21 @@ class Cmdline(object):
     return
 
   def objdump_to_hex(self, input):
-    hex = re.findall(r'^\s*[a-f0-9]*:((?:[\s\t](?:[a-f0-9]{2}))*)', input, flags=re.MULTILINE)
+    hex = re.findall(r'''\
+^ \s* [A-Fa-f0-9]* : ( (?: [\s\t] (?: [A-Fa-f0-9]{2} ) )* )
+''', input, flags=re.MULTILINE+re.VERBOSE)
     hex = ''.join(hex).replace(' ', '').replace("\t", '')
     return binascii.unhexlify(hex)
 
   def objdump_load(self, data):
-    parsed = re.findall(r'([a-f0-9]+) \<([^\>]+)\>\:\n((?:\s+[a-f0-9]+:(?:[\s\t](?:[a-f0-9]{2}))+[^\n]*)*\n)', data, flags=re.MULTILINE)
+    parsed = re.findall(r'''\
+( [A-Fa-f0-9]+ )
+\s
+\< ( [^\>]+ ) \> \: \n
+( (?: \s+ [A-Fa-f0-9]+
+:
+(?: [\s\t] (?: [A-Fa-f0-9]{2} ) )+ [^\n]* )* \n )
+''', data, flags=re.MULTILINE+re.VERBOSE)
     Function = namedtuple('Function', ['address', 'name', 'text', 'hex'])
     functions = {o[1]: Function(address=int(o[0], 16),name=o[1],text=o[2],hex=self.objdump_to_hex(o[2])) for o in parsed}
     return functions
@@ -43,6 +53,9 @@ class Cmdline(object):
       dis = host.dis.available_disassemblers['capstone'].create(md, input)
     elif self.arch == 'x86-64':
       md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+      dis = host.dis.available_disassemblers['capstone'].create(md, input)
+    elif self.arch == 'x16':
+      md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
       dis = host.dis.available_disassemblers['capstone'].create(md, input)
     else:
       raise RuntimeError('no such architecture: %s' % (self.arch, ))
@@ -118,7 +131,7 @@ if __name__ == '__main__':
 
   steps = p.decompilation_steps
   if args.step.isdigit():
-    p.step_until = steps.values()[int(args.step)]
+    p.step_until = list(steps.values())[int(args.step)]
   elif args.step in steps:
     p.step_until = steps[args.step]
   else:

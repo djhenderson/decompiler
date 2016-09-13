@@ -276,6 +276,9 @@ class goto_t(statement_t):
     statement_t.__init__(self, ea, dst)
     return
 
+  def __hash__(self):
+    return hash((self.__class__, self.expr, self.loop_container))
+
   def __eq__(self, other):
     return isinstance(other, self.__class__) and self.expr == other.expr
 

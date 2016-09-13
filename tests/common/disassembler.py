@@ -43,7 +43,7 @@ class parser_disassembler(ir_base):
     try:
       self.tree = ir_parser.parse(self.text)
     except:
-      print('Could not parse IR from text.')
+      print('ERROR: Could not parse IR from text.')
       raise
 
     return

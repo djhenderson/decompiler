@@ -81,7 +81,7 @@ class function_t(object):
     return
 
   def __repr__(self):
-    return '<%s %x %s>' % (self.__class__.__name__, self.ea, repr(self.blocks.values()))
+    return '<%s %x %s>' % (self.__class__.__name__, self.ea, repr(list(self.blocks.values())))
 
   @property
   def return_blocks(self):

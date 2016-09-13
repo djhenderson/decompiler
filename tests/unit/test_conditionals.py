@@ -59,7 +59,7 @@ class TestConditionals(TestHelper):
   def test_if2_x86(self):
     fct = self.functions_x86['if2']
 
-    #dec = self.decompile_until(fct.hex, decompiler.step_stack_propagated)
+    # dec = self.decompile_until(fct.hex, decompiler.step_stack_propagated)
 
     self.assert_step(decompiler.step_decompiled, fct.hex,
       """

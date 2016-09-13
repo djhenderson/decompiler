@@ -20,6 +20,9 @@ def disassembler_for_arch(arch_name=None):
   elif 'x86-64' in arch_name:
     print('Architecture: 64-bit intel.')
     return (ir.IR_INTEL_x64, ir.intel.ir_intel_x64, intel.disassembler)
+  elif '16' in arch_name:
+    print('Architecture: 16-bit intel.')
+    return (ir.IR_INTEL_x16, ir.intel.ir_intel_x16, intel.disassembler)
 
   raise RuntimeError("Don't know which arch to choose for %s" % (repr(filetype), ))
 

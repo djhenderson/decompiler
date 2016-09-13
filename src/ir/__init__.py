@@ -8,3 +8,4 @@
 # this is a list of all supported architectures
 IR_INTEL_x86 = 0
 IR_INTEL_x64 = 1
+IR_INTEL_x16 = 2

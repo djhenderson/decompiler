@@ -264,7 +264,7 @@ class controlflow_common_t(object):
   def trim(self, blocks):
     """ remove blocks from the given list if
         they are no longer part of the function. """
-    for block in blocks[:]:
+    for block in list(blocks)[:]:
       if block.ea not in self.function.blocks.keys():
         blocks.remove(block)
     return
@@ -615,7 +615,7 @@ class controlflow_t(controlflow_common_t):
     return self.prioritizers[-1]
 
   def reconstruct(self):
-    self.reconstruct_forward(self.function.blocks.values())
+    self.reconstruct_forward(list(self.function.blocks.values()))
     self.expand_branches()
     return
 
